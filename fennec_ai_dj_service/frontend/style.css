@@ -1,0 +1,96 @@
+/*  ────────────────────  Fennec AI DJ – Dark Gold theme  ─────────────────── */
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  padding:24px;
+  font-family:'Segoe UI',sans-serif;
+  background:#0e0e0e;
+  color:#f5c518;
+  text-align:center;
+}
+
+/* Headings */
+h1{font-size:2.4rem;margin:0 0 1.5rem;text-shadow:1px 1px 4px #000}
+h2{margin:1rem 0 .3rem;font-size:1.8rem}
+
+/* Status banner */
+#player-status{font-style:italic;color:#ccc;margin-bottom:1rem}
+
+/* Main flex blocks */
+#controls,#feedback,#chat-box{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:12px;
+  margin:20px auto;
+}
+
+/* Song display */
+#song-display{
+  background:#1a1a1a;
+  border-radius:12px;
+  padding:28px 24px;
+  max-width:600px;
+  margin:22px auto;
+  box-shadow:0 0 18px rgba(255,215,0,0.1);
+}
+#song-display p{margin:6px 0 0;font-size:1.05rem}
+
+/* Album art now has its own class */
+#song-display img.album-art{
+  margin-top:14px;
+  width:200px;
+  border-radius:10px;
+  box-shadow:0 0 8px #000;
+}
+
+/* Buttons */
+button{
+  appearance:none;
+  background:#f5c518;
+  color:#000;
+  padding:12px 24px;
+  border:none;
+  border-radius:8px;
+  font-weight:bold;
+  font-size:1rem;
+  cursor:pointer;
+  transition:transform .1s ease,background-color .25s ease;
+}
+button:hover:not(:disabled){background:#ffd700}
+button:disabled{opacity:.45;cursor:not-allowed}
+
+/* Flash colours */
+.flash-like   {background:#4caf50 !important;color:#fff !important}
+.flash-dislike{background:#f44336 !important;color:#fff !important}
+
+/* Flash pop */
+@keyframes pop{50%{transform:scale(1.18)}}
+button.flash{animation:pop .35s cubic-bezier(.3,.6,.4,1.4)}
+
+/* Chat */
+#chat-box input[type=text]{
+  width:60%;max-width:500px;
+  padding:10px;border-radius:8px;
+  border:1px solid #f5c518;
+  background:#222;color:#f5c518;
+  font-size:1rem;outline:none;
+}
+#chat-response{
+  margin-top:14px;
+  font-style:italic;
+  color:#aaa;
+  max-width:600px;
+  margin-left:auto;margin-right:auto;
+}
+
+/* Volume slider */
+input[type=range]{accent-color:#f5c518}
+
+/* Responsive */
+@media(max-width:600px){
+  #controls,#feedback,#chat-box{flex-direction:column}
+  #chat-box input[type=text],button{width:100%}
+}

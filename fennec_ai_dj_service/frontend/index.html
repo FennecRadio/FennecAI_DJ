@@ -1,0 +1,154 @@
+<!--  index.html  – Fennec AI DJ v2  (futuristic theme + animated AI DJ)  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fennec AI DJ</title>
+
+  <!-- Orbitron for a sci‑fi typeface -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+  /*  F U T U R I S T I C   D A R K   N E O N   T H E M E  */
+
+  :root{
+    --gold:      #ffd447;
+    --neon-pink: #ff00e0;
+    --neon-cyan: #00e3ff;
+    --bg:        #070708;
+    --panel:     #111119;
+    --radius:    14px;
+    --blur:      8px;
+  }
+  *{box-sizing:border-box;font-family:'Orbitron',sans-serif}
+  body       {margin:0;padding:28px;background:var(--bg);color:var(--gold);text-align:center;}
+  h1         {font-size:2.6rem;margin:0 0 1.2rem;}
+  h2         {margin:1rem 0 .3rem;font-size:2rem;letter-spacing:.5px;}
+  #player-status{font-style:italic;color:#aaa;margin-bottom:1rem;}
+
+  /* panel */
+  .panel{
+    background:var(--panel);
+    border-radius:var(--radius);
+    padding:28px 24px;
+    max-width:660px;
+    margin:22px auto;
+    box-shadow:0 0 30px 0 rgba(0,0,0,.6), 0 0 12px 2px rgba(0,255,255,.12) inset;
+    backdrop-filter:blur(var(--blur));
+  }
+
+  button{
+    appearance:none;
+    background:linear-gradient(145deg,#ffdb6d 0%,#f5c518 45%,#c99d0c 100%);
+    color:#000;
+    padding:14px 32px;
+    border:none;
+    border-radius:var(--radius);
+    font-weight:600;
+    font-size:1rem;
+    cursor:pointer;
+    letter-spacing:.3px;
+    transition:transform .12s ease, box-shadow .12s ease;
+    box-shadow:0 6px 12px rgba(255,212,71,.3);
+  }
+  button:hover:not(:disabled){
+    transform:translateY(-1px) scale(1.02);
+    box-shadow:0 8px 16px rgba(255,212,71,.45);
+  }
+  button:disabled{opacity:.5;cursor:not-allowed}
+  .flash-like   {background:#29ff9b !important;color:#000 !important;box-shadow:0 0 12px #29ff9b}
+  .flash-dislike{background:#ff0066 !important;color:#fff !important;box-shadow:0 0 12px #ff0066}
+
+  #controls,#feedback,#chat-box{
+    display:flex;justify-content:center;flex-wrap:wrap;gap:14px;margin:22px auto;
+  }
+  #chat-box input{
+    flex:1 1 340px;
+    padding:12px;border-radius:var(--radius);
+    border:2px solid var(--gold);
+    background:#0e0e16;color:var(--gold);
+    outline:none;
+  }
+  #chat-response{margin-top:14px;color:#8af;min-height:1.2em;font-style:italic;}
+  input[type=range]{accent-color:var(--gold)}
+
+  /* album art */
+  img.album-art{
+    margin-top:18px;width:220px;border-radius:12px;
+    box-shadow:0 0 12px rgba(0,255,255,.18);
+  }
+
+  /*  A N I M A T E D   A I   D J  */
+  #ai-dj{
+    position:fixed;right:32px;bottom:32px;
+    width:160px;height:160px;border-radius:50%;
+    background:url('https://i.imgur.com/U9YkE4X.png') center/contain no-repeat; /* placeholder silhouette */
+    filter:drop-shadow(0 0 12px var(--neon-cyan)) brightness(1.2);
+    animation:breathe 5s ease-in-out infinite;
+    pointer-events:none;   /* ignore clicks */
+  }
+  @keyframes breathe{
+    0%,100%{transform:scale(1);}
+    50%   {transform:scale(1.06);}
+  }
+  /* jump when song changes */
+  @keyframes jump{
+    0%{transform:translateY(0);}
+    20%{transform:translateY(-18px);}
+    60%{transform:translateY(0);}
+    100%{transform:translateY(0);}
+  }
+  .song-change{animation:jump .6s ease-out;}
+
+  /* responsive */
+  @media(max-width:600px){
+    #ai-dj{display:none}
+    body{padding:18px;}
+    button,#chat-box input{width:100%}
+  }
+  </style>
+</head>
+
+<body>
+  <h1>🎧 Welcome to Fennec AI DJ 🎶</h1>
+  <div id="player-status">🔌 Connecting…</div>
+
+  <!-- Controls -->
+  <div id="controls">
+    <button id="get-songs">Get Songs</button>
+    <button id="next-song">Next Song</button>
+  </div>
+
+  <!-- Song panel -->
+  <div id="song-display" class="panel"></div>
+
+  <!-- Like / Dislike -->
+  <div id="feedback">
+    <button id="like">👍 Like</button>
+    <button id="dislike">👎 Dislike</button>
+  </div>
+
+  <!-- Chat -->
+  <div id="chat-box">
+    <input id="chat-input" placeholder="💬 Ask your AI DJ something…">
+    <button id="send-chat">Send</button>
+  </div>
+  <div id="chat-response"></div>
+
+  <!-- Player controls -->
+  <div style="margin-top:2rem;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+    <button id="pause">⏸ Pause</button>
+    <button id="resume">▶️ Resume</button>
+    <label style="display:flex;align-items:center;gap:6px;color:var(--gold);">
+      Volume <input id="volume" type="range" min="0" max="1" step="0.05" value="0.8">
+    </label>
+  </div>
+
+  <!-- Animated DJ -->
+  <div id="ai-dj"></div>
+
+  <!-- Core logic -->
+  <script src="https://sdk.scdn.co/spotify-player.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
